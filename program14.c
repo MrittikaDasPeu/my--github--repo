@@ -2,7 +2,8 @@
 
 int main()
 {
-    int a[100], n, x, i, first = -1, last = -1;
+    int a[100], n, x, i;
+    int low, high, mid, first = -1, last = -1;
 
     scanf("%d", &n);
 
@@ -11,14 +12,42 @@ int main()
 
     scanf("%d", &x);
 
-    for(i = 0; i < n; i++)
+    low = 0;
+    high = n - 1;
+
+    /* Find first occurrence */
+    while(low <= high)
     {
-        if(a[i] == x)
+        mid = (low + high) / 2;
+
+        if(a[mid] == x)
         {
-            if(first == -1)
-                first = i;
-            last = i;
+            first = mid;
+            high = mid - 1;
         }
+        else if(a[mid] < x)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+
+    low = 0;
+    high = n - 1;
+
+    /* Find last occurrence */
+    while(low <= high)
+    {
+        mid = (low + high) / 2;
+
+        if(a[mid] == x)
+        {
+            last = mid;
+            low = mid + 1;
+        }
+        else if(a[mid] < x)
+            low = mid + 1;
+        else
+            high = mid - 1;
     }
 
     if(first == -1)
